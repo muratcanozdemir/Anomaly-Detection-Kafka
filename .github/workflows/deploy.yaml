@@ -44,6 +44,7 @@ jobs:
         run: terraform apply -auto-approve
   
   manual-approval-dev:
+    needs: create-update-eks-dev
     runs-on: ubuntu-latest
     steps:
       - uses: trstringer/manual-approval@v1.9.1
@@ -92,6 +93,7 @@ jobs:
           argocd app sync ${{matrix.environment}}-app
 
   block-prod-deployment:
+    needs: deliver-apps-dev
     runs-on: ubuntu-latest
     steps:
       - uses: trstringer/manual-approval@v1.9.1
@@ -101,6 +103,7 @@ jobs:
           secret: ${{ secrets.GITHUB_TOKEN }}
 
   create-update-eks-prod:
+    needs: block-prod-deployment
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -132,6 +135,7 @@ jobs:
         run: terraform apply -auto-approve
 
   manual-approval-prod:
+    needs: create-update-eks-prod
     runs-on: ubuntu-latest
     steps:
       - uses: trstringer/manual-approval@v1.9.1
