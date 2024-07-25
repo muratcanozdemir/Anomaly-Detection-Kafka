@@ -1,0 +1,3 @@
+PoC about deploying an EKS cluster, ArgoCD and a sample Kafka setup with a model that catches streaming anomalies.
+
+Model must be provided by the user.
